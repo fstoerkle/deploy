@@ -3,6 +3,7 @@
 #  $1: repository name ("stoerkle.net")
 #  $2: repository dir ("/home/stoerkle/repos")
 HTML_DIR="/home/stoerkle/html"
+FILES_TO_COPY=build/* .htaccess
 
 if [ -d "$2/$1/.git" ] ; then
 	cd "$2/$1"
@@ -10,7 +11,7 @@ if [ -d "$2/$1/.git" ] ; then
     	# check if @payload['head'] == `git rev-parse HEAD`
     	npm install
     	npm test
-    	cp -r build/* "$HTML_DIR"
+    	cp -r $FILES_TO_COPY "$HTML_DIR"
 	echo "Deployment of $1 was successful."
 	echo ""
 else
