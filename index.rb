@@ -1,33 +1,24 @@
+libdir = File.dirname(__FILE__)
+$LOAD_PATH.unshift(libdir) unless $LOAD_PATH.include?(libdir)
 
 require "sinatra"
 require "sinatra/reloader"
 require "json"
 
-def log(line)
-  open("deploy.log", "a") { puts line }  
-end
-
-set(:method) do |method|
-  method = method.to_s.upcase
-  condition { request.request_method == method }
-end
-
-before :method => :post do
-  type = env["HTTP_X_GITHUB_EVENT"]
-  payload = JSON.parse(params[:payload])
-end
+require "lib/common.rb"
 
 get "/" do
   "Move along."
 end
 
 post "/repo=:name" do
-  log "Received '#{type}' event for repo '#{params[:name]}'"
+  @repo_name = params[:name]
+  log "Received '#{@event_type}' event for repo '#{@repo_name}'"
 
-  if type == "push"
-    log "foo"
-  elsif type == "ping"
-    log " > #{payload['zen']}"
+  if @event_type == "push"
+    deploy @repo_name
+  elsif @event_type == "ping"
+    log " > #{@payload['zen']}"
   end
 
   log ""
