@@ -3,7 +3,7 @@
 #  $1: repository name ("stoerkle.net")
 #  $2: repository dir ("/home/stoerkle/repos")
 HTML_DIR="/home/stoerkle/html"
-FILES_TO_COPY="build/* .htaccess keybase.txt"
+FILES_TO_COPY="build/* .htaccess keybase.txt pgp.asc refugees/"
 
 if [ -d "$2/$1/.git" ] ; then
 	cd "$2/$1"
